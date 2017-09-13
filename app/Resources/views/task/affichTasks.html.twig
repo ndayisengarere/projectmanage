@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{% if app.session.flashBag.has('success') %}
+     <div class="alert alert-success">
+         {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+         {% endfor %}
+     </div>
+ {% endif %}
+<div class="panel panel-default panel-table">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col col-xs-6">
+        <h3 class="panel-title">List of tasks</h3>
+      </div>
+      <div class="col col-xs-6 text-right">
+        <a href="{{ path('task')}}" class="btn btn-primary btn-xs pull-right"><b>+</b> Add new task</a>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+   <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Task Nom</th>
+        <th>Url</th>
+        <th><span class="glyphicon glyphicon-cog"></span></th>
+        <th>Active</th>
+      </tr>
+    </thead>
+    <tbody>
+{% for task in tasks %} 
+      <tr>
+        <td>{{ task.taskNom }}</td>
+        <td>{{ task.url }}</td>
+        <td><a href="tasks/update/{{ task.id }}"><span class="glyphicon glyphicon-pencil" ></span></a></td>
+        <td><a href="tasks/active_task/{{ task.id }}/{{ task.taskActive == '' ? 0 :  task.taskActive}}"><span  {% if task.taskActive==1 %} class="glyphicon glyphicon-ok" style="color:green;" {% else %} class="glyphicon glyphicon-ok" style="color:red;" {% endif %}></span></a></td>
+      </tr>
+{% endfor %}
+    </tbody>
+  </table>
+    </div>
+ </div>
+
+{% endblock %}
+
+{% block stylesheets %}
+
+{% endblock %}

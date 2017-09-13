@@ -5,16 +5,23 @@
 {% block body %}
 
 <div class="well">
-   {{ form_start(form, {'attr': {'class': 'form-horizontal'}}) }}
+{% if app.session.flashBag.has('success') %}
+     <div class="alert alert-success">
+         {% for msg in app.session.flashBag.get('success') %}
+                {{ msg }}
+         {% endfor %}
+     </div>
+ {% endif %}
+   {{ form_start(form, {'attr': {'class': 'form-horizontal'}, 'action': path('save_action'), 'method': 'POST'}) }}
           <div class="form-group">
 
               {{ form_label(form.task_nom, "Nom Task", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-              {{ form_errors(form.task_nom) }}
 
               <div class="col-sm-4">
 
               {{ form_widget(form.task_nom, {'attr': {'class': 'form-control'}}) }}
+              {{ form_errors(form.task_nom) }}
 
               </div>
 
@@ -23,12 +30,11 @@
 
               {{ form_label(form.url, "Url", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-              {{ form_errors(form.url) }}
-
               <div class="col-sm-4">
 
-              {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
-
+               {{ form_errors(form.url) }}
+               {{ form_widget(form.url, {'attr': {'class': 'form-control'}}) }}
+            
               </div>
 
          </div>
@@ -36,11 +42,10 @@
 
               {{ form_label(form.description, "Description", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-              {{ form_errors(form.description) }}
-
               <div class="col-sm-4">
 
               {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+              {{ form_errors(form.description) }}
 
               </div>
 
@@ -49,11 +54,11 @@
 
               {{ form_label(form.description, "Active Task", {'label_attr': {'class': 'col-sm-3 control-label'}}) }}
 
-              {{ form_errors(form.task_active) }}
-
               <div class="col-sm-4">
 
               {{ form_widget(form.task_active) }}
+
+              {{ form_errors(form.task_active) }}
 
               </div>
 
@@ -62,7 +67,7 @@
 
               <div class="col-sm-4" style="margin-left: 50px;">
 
-              {{ form_widget(form.save, {'attr': {'class': 'btn btn-primary', 'style':'margin-left: 240px;'}}) }}
+              {{ form_widget(form.save, {'attr': {'class': 'btn btn-success', 'style':'margin-left: 240px;'}}) }}
 
               </div>
 
